@@ -24,30 +24,28 @@ public class PlayerMovement : MonoBehaviour
 
         inputs = inputs.normalized;
 
-
         Debug.Log(acceleration);
-
-
-
     }
 
     private void FixedUpdate()
     {
         if (inputs != Vector2.zero)
         {
-            acceleration += accelSpeed * Time.fixedDeltaTime;
-            acceleration = Mathf.Clamp(acceleration, 0, 1);
-            rb2d.velocity = inputs * speed * acceleration * Time.fixedDeltaTime;
-
+            ObjectMovement(speed);
         }
         else
         {
             acceleration -= dragSpeed * Time.fixedDeltaTime;
             acceleration = Mathf.Clamp(acceleration, 0, 1);
             rb2d.velocity = rb2d.velocity.normalized * speed * acceleration * Time.fixedDeltaTime;
-
-
         }
+    }
+
+    private void ObjectMovement(float speed)
+    {
+        acceleration += accelSpeed * Time.fixedDeltaTime;
+        acceleration = Mathf.Clamp(acceleration, 0, 1);
+        rb2d.velocity = inputs * speed * acceleration * Time.fixedDeltaTime;
     }
 
 }
