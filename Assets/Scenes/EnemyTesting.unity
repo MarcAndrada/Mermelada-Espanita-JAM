@@ -1484,9 +1484,10 @@ MonoBehaviour:
   scenariMask:
     serializedVersion: 2
     m_Bits: 64
-  orbitMoveSpeed: 3
   distanceToAttack: 4
-  orbitTargetRotationsSpeed: 1
+  orbitMoveSpeed: 4
+  orbitTargetRotationsSpeed: 1.5
+  orbitDistance: 1.5
 --- !u!1 &2118629059
 GameObject:
   m_ObjectHideFlags: 0

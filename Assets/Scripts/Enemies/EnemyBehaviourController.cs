@@ -16,13 +16,18 @@ public class EnemyBehaviourController : MonoBehaviour
     private LayerMask scenariMask;
     Vector2 rayDir;
 
+    [Header("Chase Variables"), SerializeField]
+    private float chaseSpeed;
+
     [Header("Attack Variables"), SerializeField]
-    private float orbitMoveSpeed;
-    [SerializeField]
     private float distanceToAttack;
+    [SerializeField]
+    private float orbitMoveSpeed;
     private float orbitAccumulator = 0;
     [SerializeField]
     private float orbitTargetRotationsSpeed;
+    [SerializeField]
+    private float orbitDistance;
     Vector2 posToOrbit = Vector2.zero;
 
 
@@ -66,7 +71,8 @@ public class EnemyBehaviourController : MonoBehaviour
                 LookAtPlayer();
                 //Dar vueltas alrededor del player
                 OrbitPlayer();
-
+                //Revisar tambien si esta muy lejos el player que le vuelva a perseguir
+                CheckDistanceToChase();
 
                 break;
             default:
@@ -88,7 +94,6 @@ public class EnemyBehaviourController : MonoBehaviour
         }
 
     }
-
     private void CheckPlayerDotProduct()
     {
         rayDir = EnemiesManager._instance.playerRef.transform.position - transform.position;
@@ -102,8 +107,6 @@ public class EnemyBehaviourController : MonoBehaviour
 
 
     }
-
-
     private void CheckWallsBetween() 
     {
 
@@ -116,11 +119,9 @@ public class EnemyBehaviourController : MonoBehaviour
             SeePlayer();
         }
     }
-
-    private void SeePlayer() 
+    public void SeePlayer() 
     {
-        currentState = EnemyState.CHASING;
-        agent.speed = orbitMoveSpeed;
+        StartChasing();
 
     }
 
@@ -146,24 +147,30 @@ public class EnemyBehaviourController : MonoBehaviour
         transform.rotation = rotation;
 
     }
-
     private void CheckDistanceBtwPlayer() 
     {
         if (Vector2.Distance(transform.position, EnemiesManager._instance.playerRef.transform.position) <= distanceToAttack)
         {
-            currentState = EnemyState.ATTACKING;
+            StartAttacking();
         }
+    }
+    private void StartChasing() 
+    {
+        currentState = EnemyState.CHASING;
+        agent.speed = chaseSpeed;
     }
 
     #endregion
 
-
     #region AttackFunctions
+    private void StartAttacking() 
+    {
+        currentState = EnemyState.ATTACKING;
+        agent.speed = orbitMoveSpeed;
+    }
 
     private void LookAtPlayer() 
     {
-
-
         Vector2 lookAtDir = EnemiesManager._instance.playerRef.transform.position - transform.position;
 
         float angle = Mathf.Atan2(lookAtDir.y, lookAtDir.x) * Mathf.Rad2Deg;
@@ -177,11 +184,20 @@ public class EnemyBehaviourController : MonoBehaviour
     private void OrbitPlayer() 
     {
         orbitAccumulator += Time.fixedDeltaTime * orbitTargetRotationsSpeed;
-        posToOrbit = new Vector2(Mathf.Cos(orbitAccumulator), Mathf.Sin(orbitAccumulator)) * (distanceToAttack - 1.5f);
+        Vector2 playerPos = new Vector2(EnemiesManager._instance.playerRef.transform.position.x, EnemiesManager._instance.playerRef.transform.position.y);
+        Vector2 orbitPos = new Vector2(Mathf.Cos(orbitAccumulator), Mathf.Sin(orbitAccumulator)) * orbitDistance;
+        posToOrbit = playerPos + orbitPos;
         agent.SetDestination(posToOrbit);
 
         Debug.Log("GIRASIOOOOON");
 
+    }
+    private void CheckDistanceToChase() 
+    {
+        if (Vector2.Distance(transform.position, EnemiesManager._instance.playerRef.transform.position) > distanceToAttack)
+        {
+            StartChasing();
+        }
     }
 
     #endregion
