@@ -709,7 +709,7 @@ SpriteRenderer:
   m_SortingLayerID: -863326193
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1403253908, guid: 3398beed724a6ba4a9e07f7935cf8384, type: 3}
+  m_Sprite: {fileID: 1337777099, guid: 40216c41e876cb044b38803f34cbfbff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -728,7 +728,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473457045}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.16, y: -0.7, z: 0}
+  m_LocalPosition: {x: -0.61, y: -0.7, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -964,7 +964,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -989,7 +989,7 @@ Transform:
   m_GameObject: {fileID: 1573483423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.73, y: -0.57, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3182, y: 1.3182, z: 1.3182}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1011,6 +1011,8 @@ MonoBehaviour:
   smoothing: 0.1
   maxPos: {x: 8, y: 8.65}
   minPos: {x: -9.94, y: -9.36}
+  expansionRange: 10
+  Player: {fileID: 1473457047}
 --- !u!114 &1573483428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,13 +1020,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1573483423}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffe8728a90b126349aeb7b61d8efb568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expansionRange: 10
-  Player: {fileID: 1473457047}
 --- !u!1 &1782957945
 GameObject:
   m_ObjectHideFlags: 0

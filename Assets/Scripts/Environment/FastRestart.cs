@@ -21,27 +21,36 @@ public class FastRestart : MonoBehaviour
         enemiesPositions = new Vector3[enemies.Length];
         throwablePositions = new Vector3[throwable.Length];
 
-        for (int i = 0; i < enemies.Length; i++) {
-            enemiesPositions[i] = enemies[i].transform.position;
-        }
-        for (int i = 0; i < throwable.Length; i++) {
-            throwablePositions[i] = throwable[i].transform.position;
-        }
-        playerPosition = player.transform.position;
+        SaveAllPositions();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) {
-            for (int i = 0; i < enemies.Length; i++) {
-                enemies[i].transform.position = enemiesPositions[i];
-                //enemies[i].resetState;
-            }
-            for (int i = 0; i < throwable.Length; i++) {
-                throwable[i].transform.position = throwablePositions[i];
-                //throwable[i].resetState;
-            }
-            player.transform.position = playerPosition;
+            LoadAllPositions();
         }
     }
+
+    private void SaveAllPositions() {
+        for (int i = 0; i < enemies.Length; i++) {
+            enemiesPositions[i] = enemies[i].transform.position;
+        }
+        for (int i = 0; i < throwable.Length; i++)
+        {
+            throwablePositions[i] = throwable[i].transform.position;
+        }
+        playerPosition = player.transform.position;
+    }
+    private void LoadAllPositions() {
+        for (int i = 0; i < enemies.Length; i++) {
+            enemies[i].transform.position = enemiesPositions[i];
+            //enemies[i].resetState;
+        }
+        for (int i = 0; i < throwable.Length; i++) {
+            throwable[i].transform.position = throwablePositions[i];
+            //throwable[i].resetState;
+        }
+        player.transform.position = playerPosition;
+    }
+
 }
