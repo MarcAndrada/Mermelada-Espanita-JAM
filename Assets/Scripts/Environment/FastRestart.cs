@@ -21,20 +21,18 @@ public class FastRestart : MonoBehaviour
         enemiesPositions = new Vector3[enemies.Length];
         throwablePositions = new Vector3[throwable.Length];
 
-        SaveMapPositions();
+        SaveAllPositions();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) {
-            LoadMapPositions();            
+            LoadAllPositions();
         }
     }
 
-    private void SaveMapPositions() 
-    {
-        for (int i = 0; i < enemies.Length; i++)
-        {
+    private void SaveAllPositions() {
+        for (int i = 0; i < enemies.Length; i++) {
             enemiesPositions[i] = enemies[i].transform.position;
         }
         for (int i = 0; i < throwable.Length; i++)
@@ -43,15 +41,12 @@ public class FastRestart : MonoBehaviour
         }
         playerPosition = player.transform.position;
     }
-    private void LoadMapPositions() 
-    {
-        for (int i = 0; i < enemies.Length; i++)
-        {
+    private void LoadAllPositions() {
+        for (int i = 0; i < enemies.Length; i++) {
             enemies[i].transform.position = enemiesPositions[i];
             //enemies[i].resetState;
         }
-        for (int i = 0; i < throwable.Length; i++)
-        {
+        for (int i = 0; i < throwable.Length; i++) {
             throwable[i].transform.position = throwablePositions[i];
             //throwable[i].resetState;
         }
