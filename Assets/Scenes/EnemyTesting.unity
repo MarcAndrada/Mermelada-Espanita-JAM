@@ -161,7 +161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2408184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.0878851, y: 3.4361837, z: -0.18135113}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -193,7 +193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 512711613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.89, y: 3.58, z: 0}
+  m_LocalPosition: {x: 0.84, y: 1.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1437,7 +1437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701669441}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.13, y: -0.46, z: 0}
+  m_LocalPosition: {x: -3.15, y: -2.45, z: 0}
   m_LocalScale: {x: 2.0959516, y: 2.102302, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1479,12 +1479,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  checkRange: 5
-  checkDot: 0.4
+  maxVisionDistance: 6.23
+  checkDot: 0.6
   scenariMask:
     serializedVersion: 2
-    m_Bits: 192
-  agent: {fileID: 0}
+    m_Bits: 64
+  orbitMoveSpeed: 3
+  distanceToAttack: 4
+  orbitTargetRotationsSpeed: 1
 --- !u!1 &2118629059
 GameObject:
   m_ObjectHideFlags: 0
