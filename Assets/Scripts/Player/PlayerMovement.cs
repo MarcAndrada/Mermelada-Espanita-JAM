@@ -23,8 +23,6 @@ public class PlayerMovement : MonoBehaviour
         inputs = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         inputs = inputs.normalized;
-
-        Debug.Log(acceleration);
     }
 
     private void FixedUpdate()
@@ -47,5 +45,4 @@ public class PlayerMovement : MonoBehaviour
         acceleration = Mathf.Clamp(acceleration, 0, 1);
         rb2d.velocity = inputs * speed * acceleration * Time.fixedDeltaTime;
     }
-
 }
