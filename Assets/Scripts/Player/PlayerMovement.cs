@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private float acceleration = 0;
     private Vector2 inputs;
     private Rigidbody2D rb2d;
+
+    public static Action<bool> OnMove = delegate { };
 
     // Start is called before the first frame update
     void Start()
@@ -30,12 +34,14 @@ public class PlayerMovement : MonoBehaviour
         if (inputs != Vector2.zero)
         {
             ObjectMovement(speed);
+            OnMove(true);
         }
         else
         {
             acceleration -= dragSpeed * Time.fixedDeltaTime;
             acceleration = Mathf.Clamp(acceleration, 0, 1);
             rb2d.velocity = rb2d.velocity.normalized * speed * acceleration * Time.fixedDeltaTime;
+            OnMove(false);
         }
     }
 
