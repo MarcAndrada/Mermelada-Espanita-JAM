@@ -10,7 +10,6 @@ public class DamageSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Hola como estamos");
         if (other)
         {
             Destroy(other.gameObject);
