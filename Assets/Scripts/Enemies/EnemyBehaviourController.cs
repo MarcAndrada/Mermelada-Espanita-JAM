@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyBehaviourController : MonoBehaviour
 {
     public enum EnemyState { WAITING, PATROLING, CHASING, ATTACKING, DEAD };
+    public enum PatrolType {RESTART, B_T_F };
     public EnemyState currentState;
 
     [Header("Detection Variables"), SerializeField]
@@ -15,6 +16,13 @@ public class EnemyBehaviourController : MonoBehaviour
     [SerializeField]
     private LayerMask scenariMask;
     Vector2 rayDir;
+
+    [Header("Patrol Variables"), SerializeField]
+    public PatrolType patrolType;
+    [SerializeField]
+    private Transform[] patrolPoints;
+    private int patrolIndex = -1;
+    private bool ascendingPatrol = true;
 
     [Header("Chase Variables"), SerializeField]
     private float chaseSpeed;
@@ -29,6 +37,12 @@ public class EnemyBehaviourController : MonoBehaviour
     [SerializeField]
     private float orbitDistance;
     Vector2 posToOrbit = Vector2.zero;
+
+
+    [Header("Detection Scream Variables"), SerializeField]
+    private float screamArea;
+
+
 
 
     private NavMeshAgent agent;
@@ -53,10 +67,16 @@ public class EnemyBehaviourController : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.WAITING:
+                //Comprobar si tiene el player en frente
                 CheckIfPlayerNear();
                 break;
             case EnemyState.PATROLING:
+                //Comprobar si tiene el player en frente
                 CheckIfPlayerNear();
+                //Comprobar si tiene un camino que seguir
+                CheckPath();
+                //Mirar a la direccion en la que esta andando
+                LookForward();
                 break;
             case EnemyState.CHASING:
                 //Seguir al jugador
@@ -65,6 +85,8 @@ public class EnemyBehaviourController : MonoBehaviour
                 LookForward();
                 //Comprobar la distancia entre el y el player
                 CheckDistanceBtwPlayer();
+                //Lanzarle cosas al player
+
                 break;
             case EnemyState.ATTACKING:
                 //Mirar al player
@@ -73,6 +95,8 @@ public class EnemyBehaviourController : MonoBehaviour
                 OrbitPlayer();
                 //Revisar tambien si esta muy lejos el player que le vuelva a perseguir
                 CheckDistanceToChase();
+                //Lanzarle cosas al player
+
 
                 break;
             default:
@@ -122,6 +146,7 @@ public class EnemyBehaviourController : MonoBehaviour
     public void SeePlayer() 
     {
         StartChasing();
+        DoScream();
 
     }
 
@@ -129,6 +154,51 @@ public class EnemyBehaviourController : MonoBehaviour
     #endregion
 
     #region Patrol Functions
+    private void CheckPath() 
+    {
+        if (!agent.hasPath)
+        {
+            agent.SetDestination(patrolPoints[GetNextPos()].position);
+        }
+    }
+    private int GetNextPos() 
+    {
+        switch (patrolType)
+        {
+            case PatrolType.RESTART:
+                patrolIndex++;
+                if (patrolIndex >= patrolPoints.Length)
+                {
+                    patrolIndex = 0;
+                }
+                break;
+            case PatrolType.B_T_F:
+                if (ascendingPatrol)
+                {
+                    patrolIndex++;
+                    if (patrolIndex >= patrolPoints.Length)
+                    {
+                        patrolIndex = patrolPoints.Length - 1;
+                        ascendingPatrol = false;
+                    }
+
+                }
+                else
+                {
+                    patrolIndex--;
+                    if (patrolIndex <= 0)
+                    {
+                        patrolIndex = 0;
+                        ascendingPatrol = true;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        return patrolIndex;
+    }
+
 
     #endregion
 
@@ -136,7 +206,6 @@ public class EnemyBehaviourController : MonoBehaviour
     private void ChasePlayer() 
     {
         agent.SetDestination(EnemiesManager._instance.playerRef.transform.position);
-        Debug.Log("Aqui voy :D");
     }
     private void LookForward() 
     {
@@ -162,13 +231,12 @@ public class EnemyBehaviourController : MonoBehaviour
 
     #endregion
 
-    #region AttackFunctions
+    #region Attack Functions
     private void StartAttacking() 
     {
         currentState = EnemyState.ATTACKING;
         agent.speed = orbitMoveSpeed;
     }
-
     private void LookAtPlayer() 
     {
         Vector2 lookAtDir = EnemiesManager._instance.playerRef.transform.position - transform.position;
@@ -179,7 +247,6 @@ public class EnemyBehaviourController : MonoBehaviour
 
         transform.rotation = rotation;
 
-        Debug.Log("GIRASIOOOOON");
     }
     private void OrbitPlayer() 
     {
@@ -189,7 +256,6 @@ public class EnemyBehaviourController : MonoBehaviour
         posToOrbit = playerPos + orbitPos;
         agent.SetDestination(posToOrbit);
 
-        Debug.Log("GIRASIOOOOON");
 
     }
     private void CheckDistanceToChase() 
@@ -198,6 +264,30 @@ public class EnemyBehaviourController : MonoBehaviour
         {
             StartChasing();
         }
+    }
+
+    #endregion
+
+    #region Scream Functions
+
+    private void DoScream() 
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, screamArea, Vector2.zero);
+
+        foreach (RaycastHit2D item in hits)
+        {
+            if (item.transform.gameObject.layer == LayerMask.NameToLayer("Enemy")) 
+            {
+                item.transform.GetComponent<EnemyBehaviourController>().HearedScream();
+            }
+        }
+
+
+    }
+
+    public void HearedScream() 
+    {
+        StartChasing();
     }
 
     #endregion
@@ -226,7 +316,11 @@ public class EnemyBehaviourController : MonoBehaviour
 
             Gizmos.DrawRay(transform.position, rayDir);
         }
-        
+
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, screamArea);
+
 
     }
 
