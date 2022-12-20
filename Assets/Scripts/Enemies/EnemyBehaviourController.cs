@@ -45,15 +45,19 @@ public class EnemyBehaviourController : MonoBehaviour
 
     [Header("Stun Variables"), SerializeField]
     private float stunForce;
-
-
+    [SerializeField]
+    private float timeToWaitStunned;
+    private float timeWaitedStunned = 0;
 
     private NavMeshAgent agent;
-
+    private Rigidbody2D rb2d;
+    private Animator animator;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        rb2d = GetComponent<Rigidbody2D>(); 
+        animator = GetComponent<Animator>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
@@ -79,13 +83,13 @@ public class EnemyBehaviourController : MonoBehaviour
                 //Comprobar si tiene un camino que seguir
                 CheckPath();
                 //Mirar a la direccion en la que esta andando
-                LookForward();
+                LookAt(agent.velocity);
                 break;
             case EnemyState.CHASING:
                 //Seguir al jugador
                 ChasePlayer();
                 //Mirar a la direccion en la que va 
-                LookForward();
+                LookAt(agent.velocity);
                 //Comprobar la distancia entre el y el player
                 CheckDistanceBtwPlayer();
                 //Lanzarle cosas al player
@@ -93,7 +97,7 @@ public class EnemyBehaviourController : MonoBehaviour
                 break;
             case EnemyState.ATTACKING:
                 //Mirar al player
-                LookAtPlayer();
+                LookAt(EnemiesManager._instance.playerRef.transform.position - transform.position);
                 //Dar vueltas alrededor del player
                 OrbitPlayer();
                 //Revisar tambien si esta muy lejos el player que le vuelva a perseguir
@@ -103,6 +107,7 @@ public class EnemyBehaviourController : MonoBehaviour
                 break;
             case EnemyState.STUNNED:
                 //Esperar para dejar de estar stuneado
+                WaitToUnstunned();
                 break;
 
             default:
@@ -213,15 +218,6 @@ public class EnemyBehaviourController : MonoBehaviour
     {
         agent.SetDestination(EnemiesManager._instance.playerRef.transform.position);
     }
-    private void LookForward()
-    {
-        float angle = Mathf.Atan2(agent.velocity.y, agent.velocity.x) * Mathf.Rad2Deg;
-
-        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-
-        transform.rotation = rotation;
-
-    }
     private void CheckDistanceBtwPlayer()
     {
         if (Vector2.Distance(transform.position, EnemiesManager._instance.playerRef.transform.position) <= distanceToAttack)
@@ -233,6 +229,7 @@ public class EnemyBehaviourController : MonoBehaviour
     {
         currentState = EnemyState.CHASING;
         agent.speed = chaseSpeed;
+        animator.SetBool("Walking", true);
     }
 
     #endregion
@@ -242,17 +239,6 @@ public class EnemyBehaviourController : MonoBehaviour
     {
         currentState = EnemyState.ATTACKING;
         agent.speed = orbitMoveSpeed;
-    }
-    private void LookAtPlayer()
-    {
-        Vector2 lookAtDir = EnemiesManager._instance.playerRef.transform.position - transform.position;
-
-        float angle = Mathf.Atan2(lookAtDir.y, lookAtDir.x) * Mathf.Rad2Deg;
-
-        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-
-        transform.rotation = rotation;
-
     }
     private void OrbitPlayer()
     {
@@ -298,9 +284,31 @@ public class EnemyBehaviourController : MonoBehaviour
 
     #endregion
 
+    #region Stun Functions
+
+    private void WaitToUnstunned() 
+    {
+        timeWaitedStunned += Time.fixedDeltaTime;
+
+        if (timeWaitedStunned >= timeToWaitStunned) 
+        {
+            agent.enabled = true;
+            //Cambiarle el estado
+            StartChasing();
+            //Hacer que la animacion este levantado
+            animator.SetBool("Stunned", false);
+            //Resetear el timer
+            timeWaitedStunned = 0;
+
+
+        }
+    }
+
+    #endregion
+
     #region Damage Functions
 
-    private void HittedByObject(Vector3 _objectPos) 
+    private void HittedByObject(Vector2 _objectPos) 
     {
         //Comprobar si el medidor de combo es menor a X stunearle si no matarle
         if (true)
@@ -314,46 +322,46 @@ public class EnemyBehaviourController : MonoBehaviour
     
     }
 
-    private void KillEnemy(Vector3 _killerPos) 
+    private void KillEnemy(Vector2 _killerPos) 
     {
         //Poner el estado de muerto
-
+        currentState = EnemyState.DEAD;
         //Mirar a la direccion del golpe
-
+        Vector2 knockBackDir = new Vector2(transform.position.x, transform.position.y) - _killerPos;
+        LookAt(_killerPos - (knockBackDir * 2));
         //Animacion de muerto
+        animator.SetBool("Dead", true);
+        animator.SetTrigger("Death");
     }
 
-    private void StunEnemy(Vector3 _stunnerPos) 
+    private void StunEnemy(Vector2 _stunnerPos) 
     {
         //Cambiar el estado
         currentState = EnemyState.STUNNED;
         //Empujar
-        Vector2 knockBackDir = transform.position - _stunnerPos;
+        Vector2 knockBackDir = new Vector2(transform.position.x, transform.position.y) - _stunnerPos;
 
-        if (Physics2D.Raycast(transform.position, knockBackDir, stunForce, LayerMask.NameToLayer("Scenari")))
-        {
-            ContactFilter2D contactfilters = new ContactFilter2D();
-            RaycastHit2D[] hit = new RaycastHit2D[1];
-            Physics2D.Raycast(transform.position, knockBackDir, contactfilters, hit, stunForce);
+        agent.enabled = false;
 
-            knockBackDir = hit[0].point + (-knockBackDir * 1.5f);
-            
-        }
-        else
-        {
-            knockBackDir = new Vector2(transform.position.x, transform.position.y) + (knockBackDir * stunForce);
-        }
-
-        agent.SetDestination(knockBackDir);
+        rb2d.AddForce(knockBackDir * stunForce, ForceMode2D.Impulse);
+        
         //Mirar en la direccion del golpe
-
+        LookAt(_stunnerPos - (knockBackDir * 2));
         //Animacion de tumbado
-
-
+        animator.SetBool("Stunned", true);
+        animator.SetTrigger("Stun");
     }
 
     #endregion
 
+    private void LookAt(Vector2 _lookAtDir)
+    {
+        float angle = Mathf.Atan2(_lookAtDir.y, _lookAtDir.x) * Mathf.Rad2Deg;
+
+        Quaternion rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+
+        transform.rotation = rotation;
+    }
 
     private void OnDrawGizmos()
     {
@@ -391,23 +399,11 @@ public class EnemyBehaviourController : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerProjectile"))
         {
             HittedByObject(collision.transform.position);
-            Debug.Log("Trigger");
         }
 
-        //if (collision.gameObject.CompareTag("PlayerDamageColl"))
-        //{
-        //    KillEnemy();
-        //}
-    }
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerProjectile"))
+        if (collision.gameObject.CompareTag("PlayerDamageColl"))
         {
-            HittedByObject(collision.transform.position);
-            Destroy(collision.gameObject);
-            Debug.Log("Colision");
+            KillEnemy(collision.transform.position);
         }
     }
 

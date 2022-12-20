@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: -863326193
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: -1704145472, guid: 3398beed724a6ba4a9e07f7935cf8384, type: 3}
+  m_Sprite: {fileID: 1855642329, guid: 24bb3983e7a89934fb9dde4d7524fb07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 3865984279757394074}
   m_Layer: 0
   m_Name: HitZone
-  m_TagString: Untagged
+  m_TagString: PlayerDamageColl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

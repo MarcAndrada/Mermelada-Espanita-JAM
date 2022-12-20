@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8318546393365402037}
   - component: {fileID: 8318546393365402038}
   - component: {fileID: 8318546393365402039}
+  - component: {fileID: 1701669454}
+  - component: {fileID: 1701669455}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -29,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8318546393365402033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.42, y: -1.95, z: 0}
-  m_LocalScale: {x: 2.0959516, y: 2.102302, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -1704145472, guid: 3398beed724a6ba4a9e07f7935cf8384, type: 3}
+  m_Sprite: {fileID: 1337777099, guid: 40216c41e876cb044b38803f34cbfbff, type: 3}
   m_Color: {r: 1, g: 0.28773582, b: 0.28773582, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -139,7 +141,8 @@ MonoBehaviour:
   orbitTargetRotationsSpeed: 1.5
   orbitDistance: 1.75
   screamArea: 10
-  stunForce: 2
+  stunForce: 8
+  timeToWaitStunned: 5
 --- !u!61 &8318546393365402039
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -153,16 +156,57 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1226384, y: 0.0019161999}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.4999996, y: 0.4323261}
-    oldSize: {x: 0.3, y: 0.15}
+    pivot: {x: 0.8016423, y: 0.49207082}
+    oldSize: {x: 0.49, y: 0.29}
     newSize: {x: 0.3, y: 0.15}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.33456156, y: 0.15918583}
+  m_Size: {x: 0.51085424, y: 0.39296526}
   m_EdgeRadius: 0
+--- !u!50 &1701669454
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318546393365402033}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 6
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!95 &1701669455
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318546393365402033}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 90cc256866b4aca47b27990023541dea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

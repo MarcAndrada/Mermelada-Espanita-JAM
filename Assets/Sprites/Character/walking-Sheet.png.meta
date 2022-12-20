@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 40216c41e876cb044b38803f34cbfbff
+guid: 458a660f1bc3be94f9a39b6c69ca0fb8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -38,7 +38,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -104,85 +104,148 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Character attack_0
+      name: walking-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 19
-        width: 49
-        height: 29
-      alignment: 9
-      pivot: {x: 0.8016423, y: 0.49207082}
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc5d638a93cf5d049b8470a43f9d1b54
-      internalID: 1337777099
+      spriteID: 152399cdbf8b8ca48b7ed39acf1315ac
+      internalID: 1943508834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character attack_1
+      name: walking-Sheet_1
       rect:
         serializedVersion: 2
-        x: 81
-        y: 2
-        width: 32
-        height: 43
-      alignment: 9
-      pivot: {x: 0.6949334, y: 0.7494378}
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a20fb2b7ef97b44a8f7f69361e09bee
-      internalID: -1006018065
+      spriteID: 99aaa82e1441d7a4da9d2a41dfbc04a3
+      internalID: 1474933432
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character attack_2
+      name: walking-Sheet_2
       rect:
         serializedVersion: 2
-        x: 143
-        y: 2
-        width: 32
-        height: 43
-      alignment: 9
-      pivot: {x: 0.32072115, y: 0.7535355}
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c80c0e739a2199448b4531baa3f01345
-      internalID: -1844057137
+      spriteID: dbc0fc52828fa9e43b12bc6ba30689da
+      internalID: 495728076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character attack_3
+      name: walking-Sheet_3
       rect:
         serializedVersion: 2
-        x: 207
-        y: 19
-        width: 49
-        height: 29
-      alignment: 9
-      pivot: {x: 0.20754227, y: 0.4990429}
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 158dec7a91fb2be46aea038d29de759a
-      internalID: 1874777720
+      spriteID: c1c7ab85107e8854e9ceef7f78dda035
+      internalID: -762403156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walking-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4bf64e18912c474992fede8c49530f6
+      internalID: 745213637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walking-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 415642e2fa32e0b47a07059f2c9f80d3
+      internalID: 1271417642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walking-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d2c8ce9de24b284693160244156f8c0
+      internalID: -406492564
       vertices: []
       indices: 
       edges: []
@@ -198,10 +261,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Character attack_3: 1874777720
-      Character attack_2: -1844057137
-      Character attack_0: 1337777099
-      Character attack_1: -1006018065
+      walking-Sheet_6: -406492564
+      walking-Sheet_0: 1943508834
+      walking-Sheet_2: 495728076
+      walking-Sheet_3: -762403156
+      walking-Sheet_5: 1271417642
+      walking-Sheet_4: 745213637
+      walking-Sheet_1: 1474933432
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
