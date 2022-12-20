@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyBehaviourController : MonoBehaviour
 {
-    public enum EnemyState { WAITING, PATROLING, CHASING, ATTACKING, DEAD };
-    public enum PatrolType {RESTART, B_T_F };
+    public enum EnemyState { WAITING, PATROLING, CHASING, ATTACKING, STUNNED, DEAD };
+    public enum PatrolType { RESTART, B_T_F };
     public EnemyState currentState;
 
     [Header("Detection Variables"), SerializeField]
@@ -42,6 +42,9 @@ public class EnemyBehaviourController : MonoBehaviour
     [Header("Detection Scream Variables"), SerializeField]
     private float screamArea;
 
+
+    [Header("Stun Variables"), SerializeField]
+    private float stunForce;
 
 
 
@@ -97,8 +100,11 @@ public class EnemyBehaviourController : MonoBehaviour
                 CheckDistanceToChase();
                 //Lanzarle cosas al player
 
-
                 break;
+            case EnemyState.STUNNED:
+                //Esperar para dejar de estar stuneado
+                break;
+
             default:
                 break;
         }
@@ -107,11 +113,11 @@ public class EnemyBehaviourController : MonoBehaviour
 
 
     #region Detection Functions
-    private void CheckIfPlayerNear() 
+    private void CheckIfPlayerNear()
     {
         float distanceBtwPlayer = Vector2.Distance(transform.position, EnemiesManager._instance.playerRef.transform.position);
 
-        if (distanceBtwPlayer < maxVisionDistance) 
+        if (distanceBtwPlayer < maxVisionDistance)
         {
             //El Player esta lo suficientemente cerca como para mirar donde esta
             CheckPlayerDotProduct();
@@ -131,7 +137,7 @@ public class EnemyBehaviourController : MonoBehaviour
 
 
     }
-    private void CheckWallsBetween() 
+    private void CheckWallsBetween()
     {
 
         rayDir = EnemiesManager._instance.playerRef.transform.position - transform.position;
@@ -143,7 +149,7 @@ public class EnemyBehaviourController : MonoBehaviour
             SeePlayer();
         }
     }
-    public void SeePlayer() 
+    public void SeePlayer()
     {
         StartChasing();
         DoScream();
@@ -154,14 +160,14 @@ public class EnemyBehaviourController : MonoBehaviour
     #endregion
 
     #region Patrol Functions
-    private void CheckPath() 
+    private void CheckPath()
     {
         if (!agent.hasPath)
         {
             agent.SetDestination(patrolPoints[GetNextPos()].position);
         }
     }
-    private int GetNextPos() 
+    private int GetNextPos()
     {
         switch (patrolType)
         {
@@ -203,11 +209,11 @@ public class EnemyBehaviourController : MonoBehaviour
     #endregion
 
     #region Chase Functions
-    private void ChasePlayer() 
+    private void ChasePlayer()
     {
         agent.SetDestination(EnemiesManager._instance.playerRef.transform.position);
     }
-    private void LookForward() 
+    private void LookForward()
     {
         float angle = Mathf.Atan2(agent.velocity.y, agent.velocity.x) * Mathf.Rad2Deg;
 
@@ -216,14 +222,14 @@ public class EnemyBehaviourController : MonoBehaviour
         transform.rotation = rotation;
 
     }
-    private void CheckDistanceBtwPlayer() 
+    private void CheckDistanceBtwPlayer()
     {
         if (Vector2.Distance(transform.position, EnemiesManager._instance.playerRef.transform.position) <= distanceToAttack)
         {
             StartAttacking();
         }
     }
-    private void StartChasing() 
+    private void StartChasing()
     {
         currentState = EnemyState.CHASING;
         agent.speed = chaseSpeed;
@@ -232,12 +238,12 @@ public class EnemyBehaviourController : MonoBehaviour
     #endregion
 
     #region Attack Functions
-    private void StartAttacking() 
+    private void StartAttacking()
     {
         currentState = EnemyState.ATTACKING;
         agent.speed = orbitMoveSpeed;
     }
-    private void LookAtPlayer() 
+    private void LookAtPlayer()
     {
         Vector2 lookAtDir = EnemiesManager._instance.playerRef.transform.position - transform.position;
 
@@ -248,7 +254,7 @@ public class EnemyBehaviourController : MonoBehaviour
         transform.rotation = rotation;
 
     }
-    private void OrbitPlayer() 
+    private void OrbitPlayer()
     {
         orbitAccumulator += Time.fixedDeltaTime * orbitTargetRotationsSpeed;
         Vector2 playerPos = new Vector2(EnemiesManager._instance.playerRef.transform.position.x, EnemiesManager._instance.playerRef.transform.position.y);
@@ -258,7 +264,7 @@ public class EnemyBehaviourController : MonoBehaviour
 
 
     }
-    private void CheckDistanceToChase() 
+    private void CheckDistanceToChase()
     {
         if (Vector2.Distance(transform.position, EnemiesManager._instance.playerRef.transform.position) > distanceToAttack)
         {
@@ -270,13 +276,13 @@ public class EnemyBehaviourController : MonoBehaviour
 
     #region Scream Functions
 
-    private void DoScream() 
+    private void DoScream()
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, screamArea, Vector2.zero);
 
         foreach (RaycastHit2D item in hits)
         {
-            if (item.transform.gameObject.layer == LayerMask.NameToLayer("Enemy")) 
+            if (item.transform.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 item.transform.GetComponent<EnemyBehaviourController>().HearedScream();
             }
@@ -285,9 +291,65 @@ public class EnemyBehaviourController : MonoBehaviour
 
     }
 
-    public void HearedScream() 
+    public void HearedScream()
     {
         StartChasing();
+    }
+
+    #endregion
+
+    #region Damage Functions
+
+    private void HittedByObject(Vector3 _objectPos) 
+    {
+        //Comprobar si el medidor de combo es menor a X stunearle si no matarle
+        if (true)
+        {
+            StunEnemy(_objectPos);
+        }
+        else 
+        {
+            KillEnemy(_objectPos);
+        }
+    
+    }
+
+    private void KillEnemy(Vector3 _killerPos) 
+    {
+        //Poner el estado de muerto
+
+        //Mirar a la direccion del golpe
+
+        //Animacion de muerto
+    }
+
+    private void StunEnemy(Vector3 _stunnerPos) 
+    {
+        //Cambiar el estado
+        currentState = EnemyState.STUNNED;
+        //Empujar
+        Vector2 knockBackDir = transform.position - _stunnerPos;
+
+        if (Physics2D.Raycast(transform.position, knockBackDir, stunForce, LayerMask.NameToLayer("Scenari")))
+        {
+            ContactFilter2D contactfilters = new ContactFilter2D();
+            RaycastHit2D[] hit = new RaycastHit2D[1];
+            Physics2D.Raycast(transform.position, knockBackDir, contactfilters, hit, stunForce);
+
+            knockBackDir = hit[0].point + (-knockBackDir * 1.5f);
+            
+        }
+        else
+        {
+            knockBackDir = new Vector2(transform.position.x, transform.position.y) + (knockBackDir * stunForce);
+        }
+
+        agent.SetDestination(knockBackDir);
+        //Mirar en la direccion del golpe
+
+        //Animacion de tumbado
+
+
     }
 
     #endregion
@@ -322,6 +384,31 @@ public class EnemyBehaviourController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, screamArea);
 
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
+        {
+            HittedByObject(collision.transform.position);
+            Debug.Log("Trigger");
+        }
+
+        //if (collision.gameObject.CompareTag("PlayerDamageColl"))
+        //{
+        //    KillEnemy();
+        //}
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerProjectile"))
+        {
+            HittedByObject(collision.transform.position);
+            Destroy(collision.gameObject);
+            Debug.Log("Colision");
+        }
     }
 
 }

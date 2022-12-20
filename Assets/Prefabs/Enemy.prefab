@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -1704145472, guid: 3398beed724a6ba4a9e07f7935cf8384, type: 3}
   m_Color: {r: 1, g: 0.28773582, b: 0.28773582, a: 1}
   m_FlipX: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   orbitTargetRotationsSpeed: 1.5
   orbitDistance: 1.75
   screamArea: 10
+  stunForce: 2
 --- !u!61 &8318546393365402039
 BoxCollider2D:
   m_ObjectHideFlags: 0
