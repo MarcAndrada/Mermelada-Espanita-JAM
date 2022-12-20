@@ -8,6 +8,8 @@ public class EnemyBehaviourController : MonoBehaviour
     public enum EnemyState { WAITING, PATROLING, CHASING, ATTACKING, STUNNED, DEAD };
     public enum PatrolType { RESTART, B_T_F };
     public EnemyState currentState;
+    private EnemyState starterState;
+
 
     [Header("Detection Variables"), SerializeField]
     private float maxVisionDistance;
@@ -52,15 +54,22 @@ public class EnemyBehaviourController : MonoBehaviour
     private NavMeshAgent agent;
     private Rigidbody2D rb2d;
     private Animator animator;
+    private Collider2D coll;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         rb2d = GetComponent<Rigidbody2D>(); 
         animator = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
+    }
+
+    private void Start()
+    {
+        starterState = currentState;
     }
 
     // Update is called once per frame
@@ -138,6 +147,14 @@ public class EnemyBehaviourController : MonoBehaviour
         {
             //Comprobar si hay algun muro delante
             CheckWallsBetween();
+        }
+        else
+        {
+            float distanceBtwPlayer = Vector2.Distance(transform.position, EnemiesManager._instance.playerRef.transform.position);
+            if (distanceBtwPlayer <= 2)
+            {
+                CheckWallsBetween();
+            }
         }
 
 
@@ -326,12 +343,19 @@ public class EnemyBehaviourController : MonoBehaviour
     {
         //Poner el estado de muerto
         currentState = EnemyState.DEAD;
-        //Mirar a la direccion del golpe
+        //Empujar al enemigo
         Vector2 knockBackDir = new Vector2(transform.position.x, transform.position.y) - _killerPos;
+        agent.enabled = false;
+        rb2d.AddForce(knockBackDir * stunForce, ForceMode2D.Impulse);
+
+        //Mirar a la direccion del golpe
         LookAt(_killerPos - (knockBackDir * 2));
         //Animacion de muerto
         animator.SetBool("Dead", true);
         animator.SetTrigger("Death");
+        //Desactivarle la colision
+        coll.enabled = false;
+
     }
 
     private void StunEnemy(Vector2 _stunnerPos) 
@@ -362,6 +386,14 @@ public class EnemyBehaviourController : MonoBehaviour
 
         transform.rotation = rotation;
     }
+
+    public void ResetEnemyState() 
+    {
+        agent.enabled = true;
+        coll.enabled = true;
+        currentState = starterState;
+    }
+
 
     private void OnDrawGizmos()
     {
