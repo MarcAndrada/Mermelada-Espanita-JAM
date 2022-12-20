@@ -139,7 +139,7 @@ MonoBehaviour:
   distanceToAttack: 2
   orbitMoveSpeed: 3
   orbitTargetRotationsSpeed: 1.5
-  orbitDistance: 1.75
+  orbitDistance: 2.3
   screamArea: 10
   stunForce: 8
   timeToWaitStunned: 5

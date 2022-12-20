@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3865984279226069412}
   - component: {fileID: 3865984279226069410}
   - component: {fileID: 3865984279226069409}
+  - component: {fileID: 4582793470491114052}
   - component: {fileID: 3865984279226069414}
   - component: {fileID: 3865984279226069413}
   - component: {fileID: 3865984279226069408}
@@ -149,6 +150,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4582793470491114052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3865984279226069419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e32b47a35d0bff47a5621ecb2cbbc99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3865984279226069414
 MonoBehaviour:
   m_ObjectHideFlags: 0

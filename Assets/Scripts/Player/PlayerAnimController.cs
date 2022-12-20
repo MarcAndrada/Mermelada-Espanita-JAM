@@ -67,19 +67,6 @@ public class PlayerAnimController : MonoBehaviour
     }
 
 
-    private void KillPlayer()
-    {
-        _animator.SetBool(name, false);
-
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("EnemyDamageColl"))
-        {
-            KillPlayer();
-        }
-    }
+ 
 
 }
