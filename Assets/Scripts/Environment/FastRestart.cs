@@ -9,7 +9,9 @@ public class FastRestart : MonoBehaviour
     private GameObject player;
 
     private Vector3[] enemiesPositions;
+    private Quaternion[] enemiesRotations;
     private Vector3[] throwablePositions;
+    private Quaternion[] throwableRotations;
     private Vector3 playerPosition;
 
     void Start()
@@ -19,35 +21,40 @@ public class FastRestart : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemies");
 
         enemiesPositions = new Vector3[enemies.Length];
+        enemiesRotations = new Quaternion[enemies.Length];
         throwablePositions = new Vector3[throwable.Length];
-
-        SaveAllPositions();
+        throwableRotations = new Quaternion[throwable.Length];
+        SaveAllEnteties();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) {
-            LoadAllPositions();
+            LoadAllEnteties();
         }
     }
 
-    private void SaveAllPositions() {
+    private void SaveAllEnteties() {
         for (int i = 0; i < enemies.Length; i++) {
             enemiesPositions[i] = enemies[i].transform.position;
+            enemiesRotations[i] = enemies[i].transform.rotation;
         }
         for (int i = 0; i < throwable.Length; i++)
         {
             throwablePositions[i] = throwable[i].transform.position;
+            throwableRotations[i] = throwable[i].transform.rotation;
         }
         playerPosition = player.transform.position;
     }
-    private void LoadAllPositions() {
+    private void LoadAllEnteties() {
         for (int i = 0; i < enemies.Length; i++) {
             enemies[i].transform.position = enemiesPositions[i];
+            enemies[i].transform.rotation = enemiesRotations[i];
             //enemies[i].resetState;
         }
         for (int i = 0; i < throwable.Length; i++) {
             throwable[i].transform.position = throwablePositions[i];
+            throwable[i].transform.rotation = throwableRotations[i];
             //throwable[i].resetState;
         }
         player.transform.position = playerPosition;

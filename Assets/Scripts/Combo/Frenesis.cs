@@ -12,7 +12,6 @@ public class Frenesis : MonoBehaviour
     [SerializeField] private float maxTimeCombo;
     [SerializeField] private float currentTimeCombo;
     [SerializeField] private int comboLevel;
-    [SerializeField] private bool frenesis;
 
     [Header("Interface")]
     [SerializeField] private Sprite[] combosLevelsTextures;
