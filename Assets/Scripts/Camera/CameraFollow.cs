@@ -61,6 +61,6 @@ public class CameraFollow : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y - 0.1f, posZ);
         }
 
-        Debug.Log(Input.mousePosition);
+        //Debug.Log(Input.mousePosition);
     }
 }
