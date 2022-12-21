@@ -59,15 +59,4 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-<<<<<<< HEAD
-=======
-
-    private void ObjectMovement(float speed)
-    {
-        acceleration += accelSpeed * Time.fixedDeltaTime;
-        acceleration = Mathf.Clamp(acceleration, 0, 1 );
-        rb2d.velocity = inputs * speed * acceleration * Time.fixedDeltaTime;
-    }
-
->>>>>>> main
 }

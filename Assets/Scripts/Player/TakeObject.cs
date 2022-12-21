@@ -30,7 +30,10 @@ public class TakeObject : MonoBehaviour
     private void ThrowPlate()
     {
         if (!_tk.HasObject) return;
+        _plate.transform.rotation = GetComponent<Transform>().rotation;
         _plate.transform.SetParent(null);
+        var _playerPosition = GetComponent<Transform>().position;
+        _plate.GetComponent<PlateMovement>().Direction = new Vector2(_playerPosition.x, _playerPosition.y);
         _plate.GetComponent<PlateMovement>().enabled = true;
     }
     

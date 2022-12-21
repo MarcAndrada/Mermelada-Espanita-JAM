@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlateMovement : MonoBehaviour
 {
     [SerializeField] private int speed = 70;
     [SerializeField] private float dragSpeed = 5;
     private float acceleration = 1;
+
+    public Vector2 Direction { private get; set; }
 
     private Rigidbody2D rb2d;
 
