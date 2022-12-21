@@ -21,6 +21,9 @@ public class Frenesis : MonoBehaviour {
     [Header("PostProcessing")]
     [SerializeField] private GameObject pVolumeGameObject;
     private PostProcessVolume volume;
+    Vignette vignette;
+    ChromaticAberration chromaticAberration;
+    Grain grain;
 
     private void Start() {
         volume = pVolumeGameObject.AddComponent<PostProcessVolume>();
@@ -33,22 +36,22 @@ public class Frenesis : MonoBehaviour {
     }
     
     private void CreateVignette() {
-        Vignette vignette = volume.profile.AddSettings<Vignette>();
+        vignette = volume.profile.AddSettings<Vignette>();
 
         vignette.enabled.Override(true);
-        vignette.intensity.Override(0.41f);
+        vignette.intensity.Override(0.15f);
         vignette.color.Override(Color.red);
         vignette.smoothness.Override(0.36f);
         vignette.roundness.Override(1f);
     }
     private void CreateChromaticAberration() {
-        ChromaticAberration chromaticAberration = volume.profile.AddSettings<ChromaticAberration>();
+        chromaticAberration = volume.profile.AddSettings<ChromaticAberration>();
 
         chromaticAberration.enabled.Override(true);
         chromaticAberration.intensity.Override(0.5f);
     }
     private void CreateGrain() {
-        Grain grain = volume.profile.AddSettings<Grain>();
+        grain = volume.profile.AddSettings<Grain>();
 
         grain.enabled.Override(true);
         grain.colored.Override(true);
@@ -63,22 +66,26 @@ public class Frenesis : MonoBehaviour {
         image.sprite = combosLevelsTextures[comboLevel];
 
         // Cambiar por kills conseguidas
-        if (Input.GetKeyDown(KeyCode.P) && comboLevel <= 2)
+        if (Input.GetKeyDown(KeyCode.P) && comboLevel < 2 )
         {
             comboLevel++;
             currentTimeCombo = maxTimeCombo;
         }
 
+        if (comboLevel >= 0) {
+            vignette.intensity.Override(0.15f);
+        }
         if (comboLevel >= 1) {
-            volume.profile.GetSetting<Vignette>().intensity.Override(0.5f);
+            vignette.intensity.Override(0.25f);
         }
         if (comboLevel >= 2) {
-            volume.profile.GetSetting<Vignette>().intensity.Override(1f);
+            vignette.intensity.Override(0.5f);
         }
-        if (comboLevel > 0)
+
+        if (comboLevel >= 0 && comboLevel < 3)
         {
             currentTimeCombo -= Time.deltaTime;
-            if (currentTimeCombo <= 0)
+            if (currentTimeCombo <= 0 && comboLevel != 0)
             {
                 currentTimeCombo = maxTimeCombo;
                 comboLevel--;
