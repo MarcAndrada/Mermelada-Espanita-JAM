@@ -1821,14 +1821,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3865984279226069412, guid: 5432e2b43b634e24cb63b18a705181da, type: 3}
-      propertyPath: m_LinearDrag
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3865984279226069412, guid: 5432e2b43b634e24cb63b18a705181da, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 3865984279226069417, guid: 5432e2b43b634e24cb63b18a705181da, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1876,10 +1868,6 @@ PrefabInstance:
     - target: {fileID: 3865984279226069419, guid: 5432e2b43b634e24cb63b18a705181da, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3865984279757394076, guid: 5432e2b43b634e24cb63b18a705181da, type: 3}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5432e2b43b634e24cb63b18a705181da, type: 3}
