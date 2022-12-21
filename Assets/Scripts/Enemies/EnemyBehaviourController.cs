@@ -38,8 +38,14 @@ public class EnemyBehaviourController : MonoBehaviour
     private float orbitTargetRotationsSpeed;
     [SerializeField]
     private float orbitDistance;
-    Vector2 posToOrbit = Vector2.zero;
-
+    private Vector2 posToOrbit = Vector2.zero;
+    [SerializeField]
+    private float timeToWaitAttack;
+    private float timeWaitedAttack;
+    [SerializeField]
+    private GameObject plate;
+    [SerializeField]
+    private float lunchForce;
 
     [Header("Detection Scream Variables"), SerializeField]
     private float screamArea;
@@ -59,7 +65,7 @@ public class EnemyBehaviourController : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        rb2d = GetComponent<Rigidbody2D>(); 
+        rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
         agent.updateRotation = false;
@@ -70,6 +76,7 @@ public class EnemyBehaviourController : MonoBehaviour
     private void Start()
     {
         starterState = currentState;
+        timeWaitedAttack = timeToWaitAttack - 0.25f;
     }
 
     // Update is called once per frame
@@ -102,7 +109,7 @@ public class EnemyBehaviourController : MonoBehaviour
                 //Comprobar la distancia entre el y el player
                 CheckDistanceBtwPlayer();
                 //Lanzarle cosas al player
-
+                WaitToThrowPlate();
                 break;
             case EnemyState.ATTACKING:
                 //Mirar al player
@@ -112,7 +119,7 @@ public class EnemyBehaviourController : MonoBehaviour
                 //Revisar tambien si esta muy lejos el player que le vuelva a perseguir
                 CheckDistanceToChase();
                 //Lanzarle cosas al player
-
+                WaitToThrowPlate();
                 break;
             case EnemyState.STUNNED:
                 //Esperar para dejar de estar stuneado
@@ -274,6 +281,33 @@ public class EnemyBehaviourController : MonoBehaviour
             StartChasing();
         }
     }
+    private void WaitToThrowPlate() 
+    {
+        timeWaitedAttack += Time.fixedDeltaTime;
+        if (timeWaitedAttack >= timeToWaitAttack)
+        {
+            ThrowPlate();
+            timeWaitedAttack = 0;
+        }
+
+    }
+
+    private void ThrowPlate() 
+    {
+        GameObject thisPlate = Instantiate(plate,transform.position,transform.rotation);
+        thisPlate.gameObject.tag = "EnemyProjectile";
+        
+        Rigidbody2D plateRb = thisPlate.GetComponent<Rigidbody2D>();
+        plateRb.simulated = true;
+        plateRb.AddForce(transform.up * lunchForce, ForceMode2D.Impulse);
+        
+        PlateMovement plateScript =  thisPlate.GetComponent<PlateMovement>();
+        plateScript.parentType = PlateMovement.ParentType.ENEMY;
+        plateScript.enabled = true;
+
+    }
+
+
 
     #endregion
 
@@ -392,6 +426,7 @@ public class EnemyBehaviourController : MonoBehaviour
         agent.enabled = true;
         coll.enabled = true;
         currentState = starterState;
+        timeWaitedAttack = timeToWaitAttack - 0.25f;
     }
 
 

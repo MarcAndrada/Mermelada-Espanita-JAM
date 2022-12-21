@@ -13,12 +13,6 @@ public class TakeObject : MonoBehaviour
 
     [SerializeField] private GameObject objectToParent;
     [SerializeField] private GameObject _plate;
-    private TakeObject _tk;
-
-    private void Awake()
-    {
-        _tk = GetComponent<TakeObject>();
-    }
 
     private void OnEnable()
     {
@@ -32,14 +26,18 @@ public class TakeObject : MonoBehaviour
     
     private void ThrowPlate()
     {
-        if (!_tk.HasObject) return;
+        if (!_hasObject) return;
 
         _plate.transform.SetParent(null);
         _plate.gameObject.tag = "PlayerProjectile";
         Rigidbody2D plateRb = _plate.GetComponent<Rigidbody2D>();
         plateRb.simulated = true;
         plateRb.AddForce(transform.up * lunchForce, ForceMode2D.Impulse);
-        _plate.GetComponent<PlateMovement>().enabled = true;
+        PlateMovement plateScript =  _plate.GetComponent<PlateMovement>();
+        plateScript.parentType = PlateMovement.ParentType.PLAYER;
+        plateScript.enabled = true;
+        _plate = null;
+        _hasObject = false;
         
     }
     

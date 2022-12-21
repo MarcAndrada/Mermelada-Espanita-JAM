@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlateMovement : MonoBehaviour
 {
+    public enum ParentType {PLAYER, ENEMY };
+    public ParentType parentType;
+
     private Rigidbody2D rb2d;
     private Collider2D coll2d;
 
@@ -27,7 +30,6 @@ public class PlateMovement : MonoBehaviour
         if (rb2d.velocity.magnitude < 0.3f && !plateBreak)
         {
             BreakPlate();
-
         }
     }
 
@@ -46,7 +48,7 @@ public class PlateMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemies"))
+        if (collision.gameObject.CompareTag("Enemies") && parentType == ParentType.PLAYER || collision.gameObject.CompareTag("Player") && parentType == ParentType.ENEMY)
         {
             BreakPlate();
         }
