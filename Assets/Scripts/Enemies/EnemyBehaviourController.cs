@@ -56,6 +56,8 @@ public class EnemyBehaviourController : MonoBehaviour
     private Animator animator;
     private Collider2D coll;
 
+    AudioSource deathSound;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -64,12 +66,12 @@ public class EnemyBehaviourController : MonoBehaviour
         coll = GetComponent<Collider2D>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-
     }
 
     private void Start()
     {
         starterState = currentState;
+        deathSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -355,6 +357,7 @@ public class EnemyBehaviourController : MonoBehaviour
         animator.SetTrigger("Death");
         //Desactivarle la colision
         coll.enabled = false;
+        deathSound.Play();
 
     }
 

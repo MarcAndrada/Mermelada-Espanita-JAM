@@ -11,9 +11,12 @@ public class PlayerAnimController : MonoBehaviour
     [SerializeField]
     private Collider2D coll2D;
 
+    AudioSource hitSound;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        hitSound = GetComponent<AudioSource>();
     }
 
     #region EventSubscribers
@@ -44,6 +47,7 @@ public class PlayerAnimController : MonoBehaviour
         if (_isAttacking) return;
         _isAttacking = true;
         _animator.SetTrigger("Attack");
+        hitSound.Play();
     }
     
     private void ThrowAnim()
