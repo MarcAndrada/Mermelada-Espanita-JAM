@@ -6,6 +6,9 @@ using UnityEngine;
 public class TakeObject : MonoBehaviour
 {
     [SerializeField] private bool _hasObject;
+    [SerializeField]
+    private float lunchForce;
+
     public bool HasObject => _hasObject;
 
     [SerializeField] private GameObject objectToParent;
@@ -30,11 +33,14 @@ public class TakeObject : MonoBehaviour
     private void ThrowPlate()
     {
         if (!_tk.HasObject) return;
-        _plate.transform.rotation = GetComponent<Transform>().rotation;
+
         _plate.transform.SetParent(null);
-        var _playerPosition = GetComponent<Transform>().position;
-        _plate.GetComponent<PlateMovement>().Direction = new Vector2(_playerPosition.x, _playerPosition.y);
+        _plate.gameObject.tag = "PlayerProjectile";
+        Rigidbody2D plateRb = _plate.GetComponent<Rigidbody2D>();
+        plateRb.simulated = true;
+        plateRb.AddForce(transform.up * lunchForce, ForceMode2D.Impulse);
         _plate.GetComponent<PlateMovement>().enabled = true;
+        
     }
     
 
@@ -42,8 +48,9 @@ public class TakeObject : MonoBehaviour
         if (col.CompareTag("Object")) {
             _hasObject = true;
             _plate = col.gameObject;
-            col.gameObject.transform.parent = objectToParent.transform;
-            col.gameObject.transform.position = objectToParent.transform.position;
+            _plate.GetComponent<Rigidbody2D>().simulated = false;
+            _plate.transform.SetParent(objectToParent.transform);
+            _plate.transform.localPosition = Vector2.zero;
         }
     }
 }

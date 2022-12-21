@@ -6,28 +6,55 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlateMovement : MonoBehaviour
 {
-    [SerializeField] private int speed = 70;
-    [SerializeField] private float dragSpeed = 5;
-    private float acceleration = 1;
-
-    public Vector2 Direction { private get; set; }
-
     private Rigidbody2D rb2d;
+    private Collider2D coll2d;
 
-    void Start()
+    private bool plateBreak = false;
+    void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        coll2d = GetComponent<Collider2D>();
+
     }
 
     private void FixedUpdate()
     {
-        acceleration -= dragSpeed * Time.fixedDeltaTime;
-        acceleration = Math.Clamp(acceleration, 0, 1);
-        rb2d.velocity = new Vector2(0, 1) * speed * acceleration * Time.fixedDeltaTime;
+        CheckIfPlateDestroyed();
     }
 
-    void DeadPlate()
+    private void CheckIfPlateDestroyed()
     {
-         Destroy(gameObject);
+        if (rb2d.velocity.magnitude < 0.3f && !plateBreak)
+        {
+            BreakPlate();
+
+        }
     }
+
+    void BreakPlate()
+    {
+        //Animacion de romper plato
+
+        //Desactivar la colision
+        coll2d.enabled = false;
+        //Parar el movimiento
+        rb2d.velocity = Vector2.zero;
+        rb2d.simulated = false;
+
+        plateBreak = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemies"))
+        {
+            BreakPlate();
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Scenari"))
+        {
+            BreakPlate();
+        }
+    }
+
 }

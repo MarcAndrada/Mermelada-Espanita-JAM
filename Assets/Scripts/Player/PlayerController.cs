@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("EnemyDamageColl"))
+        if (collision.gameObject.CompareTag("EnemyProjectile"))
         {
             KillPlayer(collision.transform.position);
         }
