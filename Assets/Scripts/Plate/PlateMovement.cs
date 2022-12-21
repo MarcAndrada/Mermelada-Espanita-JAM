@@ -11,13 +11,18 @@ public class PlateMovement : MonoBehaviour
 
     private Rigidbody2D rb2d;
     private Collider2D coll2d;
-
+    private Animator animator;
     private bool plateBreak = false;
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         coll2d = GetComponent<Collider2D>();
+        animator = GetComponent<Animator>();
+    }
 
+    private void Start()
+    {
+        animator.SetTrigger("Throw");
     }
 
     private void FixedUpdate()
@@ -30,13 +35,12 @@ public class PlateMovement : MonoBehaviour
         if (rb2d.velocity.magnitude < 0.3f && !plateBreak)
         {
             BreakPlate();
+            animator.SetTrigger("Fall");
         }
     }
 
     void BreakPlate()
     {
-        //Animacion de romper plato
-
         //Desactivar la colision
         coll2d.enabled = false;
         //Parar el movimiento
@@ -48,14 +52,12 @@ public class PlateMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemies") && parentType == ParentType.PLAYER || collision.gameObject.CompareTag("Player") && parentType == ParentType.ENEMY)
+        if (collision.gameObject.CompareTag("Enemies") && parentType == ParentType.PLAYER || 
+            collision.gameObject.CompareTag("Player") && parentType == ParentType.ENEMY ||
+            collision.gameObject.layer == LayerMask.NameToLayer("Scenari"))
         {
             BreakPlate();
-        }
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Scenari"))
-        {
-            BreakPlate();
+            animator.SetTrigger("Hit");
         }
     }
 

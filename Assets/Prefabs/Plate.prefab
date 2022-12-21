@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 527619091690514929}
   - component: {fileID: 527619091690514924}
   - component: {fileID: 527619091690514925}
+  - component: {fileID: 8802470676782361068}
   m_Layer: 11
   m_Name: Plate
   m_TagString: Object
@@ -137,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4ad711fcb626c74185d3a4ea53731fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentType: 0
 --- !u!114 &527619091690514925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +151,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9aafc0f6d3762f4988cc7e874f9aefe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &8802470676782361068
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527619091690514922}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 57d58bfb74ea84f4da801b0ac58553f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
