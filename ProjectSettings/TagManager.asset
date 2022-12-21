@@ -8,6 +8,7 @@ TagManager:
   - Object
   - PlayerProjectile
   - PlayerDamageColl
+  - EnemyDamageColl
   layers:
   - Default
   - TransparentFX
@@ -19,9 +20,9 @@ TagManager:
   - Player
   - Enemy
   - PostProcessing
-  - 
-  - 
-  - 
+  - Doors
+  - Projectile
+  - PlayerDamageColl
   - 
   - 
   - 

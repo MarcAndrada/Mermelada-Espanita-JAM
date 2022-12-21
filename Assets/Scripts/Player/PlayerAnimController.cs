@@ -8,9 +8,10 @@ public class PlayerAnimController : MonoBehaviour
     // [SerializeField] private float _attackResetTime = 0.12f;
     [SerializeField] private bool _isAttacking;
     private Animator _animator;
-    
+    [SerializeField]
+    private Collider2D coll2D;
 
-    void Start()
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
     }
@@ -54,4 +55,18 @@ public class PlayerAnimController : MonoBehaviour
     {
         _isAttacking = false;
     }
+
+    public void EnableAttackCollider() 
+    {
+        coll2D.enabled = true;
+    }
+
+    public void DisableAttackCollider() 
+    {
+        coll2D.enabled = false;
+    }
+
+
+ 
+
 }
