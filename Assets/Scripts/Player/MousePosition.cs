@@ -9,7 +9,7 @@ public class MousePosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_transform = this.transform;
+        m_transform = transform;
     }
 
     // Update is called once per frame

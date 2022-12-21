@@ -33,7 +33,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (inputs != Vector2.zero)
         {
-            ObjectMovement(speed);
+            acceleration += accelSpeed * Time.fixedDeltaTime;
+            acceleration = Mathf.Clamp(acceleration, 0, 1);
+            rb2d.velocity = inputs * speed * acceleration * Time.fixedDeltaTime;
             OnMove(true);
         }
         else
@@ -43,12 +45,5 @@ public class PlayerMovement : MonoBehaviour
             rb2d.velocity = rb2d.velocity.normalized * speed * acceleration * Time.fixedDeltaTime;
             OnMove(false);
         }
-    }
-
-    private void ObjectMovement(float speed)
-    {
-        acceleration += accelSpeed * Time.fixedDeltaTime;
-        acceleration = Mathf.Clamp(acceleration, 0, 1);
-        rb2d.velocity = inputs * speed * acceleration * Time.fixedDeltaTime;
     }
 }
