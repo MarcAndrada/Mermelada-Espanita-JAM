@@ -52,7 +52,7 @@ public class PlayerAnimController : MonoBehaviour
     
     private void ThrowAnim()
     {
-        Debug.Log("Hola como estamos");
+        //Debug.Log("Hola como estamos");
     }
 
     private void ResetAttack()

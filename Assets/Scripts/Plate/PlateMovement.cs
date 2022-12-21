@@ -6,35 +6,57 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlateMovement : MonoBehaviour
 {
-    [SerializeField] private int speed = 70;
-    [SerializeField] private float dragSpeed = 5;
-    
-    private float acceleration = 1;
-
-    public Vector2 Direction { private get; set; }
+    public enum ParentType {PLAYER, ENEMY };
+    public ParentType parentType;
 
     private Rigidbody2D rb2d;
+    private Collider2D coll2d;
 
-    void Start()
+    private bool plateBreak = false;
+    void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        coll2d = GetComponent<Collider2D>();
+
     }
 
     private void FixedUpdate()
     {
-        //No funciona
-        if (rb2d.velocity.magnitude < 0.5f)
-        {
-            DeadPlate();
-        }
-        acceleration -= dragSpeed * Time.fixedDeltaTime;
-        acceleration = Math.Clamp(acceleration, 0, 1);
-        rb2d.velocity = Direction * (speed * acceleration * Time.fixedDeltaTime);
+        CheckIfPlateDestroyed();
     }
 
-    void DeadPlate()
+    private void CheckIfPlateDestroyed()
     {
-        //Hay que mirar esto
-         Destroy(gameObject);
+        if (rb2d.velocity.magnitude < 0.3f && !plateBreak)
+        {
+            BreakPlate();
+        }
     }
+
+    void BreakPlate()
+    {
+        //Animacion de romper plato
+
+        //Desactivar la colision
+        coll2d.enabled = false;
+        //Parar el movimiento
+        rb2d.velocity = Vector2.zero;
+        rb2d.simulated = false;
+
+        plateBreak = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemies") && parentType == ParentType.PLAYER || collision.gameObject.CompareTag("Player") && parentType == ParentType.ENEMY)
+        {
+            BreakPlate();
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Scenari"))
+        {
+            BreakPlate();
+        }
+    }
+
 }
