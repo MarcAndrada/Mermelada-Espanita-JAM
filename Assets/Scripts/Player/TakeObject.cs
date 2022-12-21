@@ -51,7 +51,7 @@ public class TakeObject : MonoBehaviour
             _plate = col.gameObject;
             _plate.GetComponent<Rigidbody2D>().simulated = false;
             _plate.transform.SetParent(objectToParent.transform);
-            _plate.transform.localPosition = Vector2.zero;
+            _plate.transform.position = objectToParent.transform.position;
         }
     }
 }
