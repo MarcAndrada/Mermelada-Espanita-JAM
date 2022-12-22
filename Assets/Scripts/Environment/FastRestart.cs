@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FastRestart : MonoBehaviour
 {
-    private GameObject[] enemies;
-    private GameObject[] throwable;
-    private GameObject player;
+    private EnemyBehaviourController[] enemies;
+    private PlateMovement[] throwable;
+    private PlayerController player;
 
     private Vector3[] enemiesPositions;
     private Quaternion[] enemiesRotations;
@@ -16,9 +16,20 @@ public class FastRestart : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        throwable = GameObject.FindGameObjectsWithTag("Object");
-        enemies = GameObject.FindGameObjectsWithTag("Enemies");
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        GameObject[] throwableObj = GameObject.FindGameObjectsWithTag("Object");
+        throwable = new PlateMovement[throwableObj.Length];
+        for (int i = 0; i < throwable.Length; i++)
+        {
+            throwable[i] = throwableObj[i].GetComponent<PlateMovement>();
+        }
+        GameObject[] enemiesObj = GameObject.FindGameObjectsWithTag("Enemies");
+        enemies = new EnemyBehaviourController[enemiesObj.Length];
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i] = enemiesObj[i].GetComponent<EnemyBehaviourController>();
+        }
+
 
         enemiesPositions = new Vector3[enemies.Length];
         enemiesRotations = new Quaternion[enemies.Length];
@@ -47,17 +58,22 @@ public class FastRestart : MonoBehaviour
         playerPosition = player.transform.position;
     }
     private void LoadAllEnteties() {
+        player.transform.position = playerPosition;
+        player.ResetPlayerState();
+
         for (int i = 0; i < enemies.Length; i++) {
             enemies[i].transform.position = enemiesPositions[i];
             enemies[i].transform.rotation = enemiesRotations[i];
-            //enemies[i].resetState;
+            enemies[i].ResetEnemyState(enemiesPositions[i]);
         }
         for (int i = 0; i < throwable.Length; i++) {
             throwable[i].transform.position = throwablePositions[i];
             throwable[i].transform.rotation = throwableRotations[i];
-            //throwable[i].resetState;
+            throwable[i].ResetPlate();
+            throwable[i].enabled = false;
+            throwable[i].gameObject.tag = "Object";
         }
-        player.transform.position = playerPosition;
+       
     }
 
 }

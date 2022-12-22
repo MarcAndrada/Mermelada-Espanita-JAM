@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement movementController;
     private MousePosition mousePosController;
     private InputSystem inputSystem;
+    private TakeObject takeObject;
 
     private void Awake()
     {
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour
         movementController = GetComponent<PlayerMovement>();
         mousePosController = GetComponent<MousePosition>();
         inputSystem = GetComponent<InputSystem>();
+        takeObject = GetComponent<TakeObject>();
+
     }
 
 
@@ -40,12 +43,20 @@ public class PlayerController : MonoBehaviour
 
     public void ResetPlayerState() 
     {
+        if (takeObject._plate != null)
+        {
+            takeObject._plate.transform.parent = null;
+            takeObject._hasObject = false;
+
+        }
         //Cambiarle la animacion
         animator.SetBool("Dead", false);
         //Activar los scripts del player
         movementController.enabled = true;
         mousePosController.enabled = true;
         inputSystem.enabled = true;
+        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

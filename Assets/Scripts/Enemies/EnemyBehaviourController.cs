@@ -424,12 +424,22 @@ public class EnemyBehaviourController : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    public void ResetEnemyState() 
+    public void ResetEnemyState(Vector2 _starterPos) 
     {
         agent.enabled = true;
         coll.enabled = true;
         currentState = starterState;
+        agent.SetDestination(_starterPos);
         timeWaitedAttack = timeToWaitAttack - 0.25f;
+        if (currentState == EnemyState.WAITING)
+        {
+            animator.SetBool("Walking", false);
+        }
+        animator.SetBool("Dead", false);
+        animator.SetBool("Stunned", false);
+
+       
+
     }
 
 

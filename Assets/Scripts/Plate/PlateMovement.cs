@@ -32,14 +32,14 @@ public class PlateMovement : MonoBehaviour
 
     private void CheckIfPlateDestroyed()
     {
-        if (rb2d.velocity.magnitude < 0.3f && !plateBreak)
+        if (rb2d.velocity.magnitude < 0.4f && !plateBreak)
         {
             BreakPlate();
             animator.SetTrigger("Fall");
         }
     }
 
-    void BreakPlate()
+    private void BreakPlate()
     {
         //Desactivar la colision
         coll2d.enabled = false;
@@ -48,6 +48,15 @@ public class PlateMovement : MonoBehaviour
         rb2d.simulated = false;
 
         plateBreak = true;
+    }
+
+    public void ResetPlate() 
+    {
+        coll2d.enabled = true;
+        rb2d.simulated = true;
+        plateBreak = false;
+        animator.SetTrigger("Restart");     
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

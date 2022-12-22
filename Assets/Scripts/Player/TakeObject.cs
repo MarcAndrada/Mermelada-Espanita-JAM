@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class TakeObject : MonoBehaviour
 {
-    [SerializeField] private bool _hasObject;
+    [SerializeField] public bool _hasObject;
     [SerializeField]
     private float lunchForce;
 
-    public bool HasObject => _hasObject;
-
     [SerializeField] private GameObject objectToParent;
-    [SerializeField] private GameObject _plate;
+    [SerializeField] public GameObject _plate;
 
     private void OnEnable()
     {
