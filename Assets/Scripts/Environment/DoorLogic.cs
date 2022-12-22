@@ -7,14 +7,11 @@ public class DoorLogic : MonoBehaviour
     public GameObject doorOpened;
     public GameObject doorClosed;
 
-    AudioSource doorSound;
-
     public Collider2D m_Collider;
 
     void Start()
     {
         m_Collider = GetComponent<Collider2D>();
-        doorSound = GetComponent<AudioSource>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -24,7 +21,8 @@ public class DoorLogic : MonoBehaviour
             this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             doorClosed.SetActive(false);
             doorOpened.SetActive(true);
-            doorSound.Play();
+
+            SoundManager._soundMInstance.Play("DoorOpen");
         }
     }
 }

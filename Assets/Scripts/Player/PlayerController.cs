@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         //Empujar el player 
         Vector2 knockBackDir = new Vector2(transform.position.x, transform.position.y) - _damageDealerPos;
         rb2d.AddForce(knockBackDir * 20, ForceMode2D.Impulse);
+        SoundManager._soundMInstance.Play("DeathSound");
 
     }
 

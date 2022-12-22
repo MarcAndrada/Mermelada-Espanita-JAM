@@ -37,7 +37,7 @@ public class TakeObject : MonoBehaviour
         plateScript.enabled = true;
         _plate = null;
         _hasObject = false;
-        
+        SoundManager._soundMInstance.Play("ThrowSound");
     }
 
 
@@ -50,6 +50,7 @@ public class TakeObject : MonoBehaviour
             _plate.GetComponent<Rigidbody2D>().simulated = false;
             _plate.transform.SetParent(objectToParent.transform);
             _plate.transform.position = objectToParent.transform.position;
+            SoundManager._soundMInstance.Play("PickSound");
         }
     }
 }

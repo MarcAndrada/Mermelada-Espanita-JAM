@@ -62,8 +62,6 @@ public class EnemyBehaviourController : MonoBehaviour
     private Animator animator;
     private Collider2D coll;
 
-    AudioSource deathSound;
-
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -78,7 +76,6 @@ public class EnemyBehaviourController : MonoBehaviour
     {
         starterState = currentState;
         timeWaitedAttack = timeToWaitAttack - 0.25f;
-        deathSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -131,9 +128,7 @@ public class EnemyBehaviourController : MonoBehaviour
             default:
                 break;
         }
-
     }
-
 
     #region Detection Functions
     private void CheckIfPlayerNear()
@@ -184,7 +179,7 @@ public class EnemyBehaviourController : MonoBehaviour
     {
         StartChasing();
         DoScream();
-
+        SoundManager._soundMInstance.Play("EnemyAlertSound");
     }
 
 
@@ -307,6 +302,7 @@ public class EnemyBehaviourController : MonoBehaviour
         plateScript.parentType = PlateMovement.ParentType.ENEMY;
         plateScript.enabled = true;
 
+        SoundManager._soundMInstance.Play("ThrowSound");
     }
 
 
@@ -353,7 +349,7 @@ public class EnemyBehaviourController : MonoBehaviour
             //Resetear el timer
             timeWaitedStunned = 0;
 
-
+            SoundManager._soundMInstance.Play("StunSound");
         }
     }
 
@@ -392,9 +388,8 @@ public class EnemyBehaviourController : MonoBehaviour
         //Desactivarle la colision
         coll.enabled = false;
 
-        deathSound.Play();
+        SoundManager._soundMInstance.Play("DeathSound");
         Frenesis._instance.IncrementFrenesi();
-
     }
 
     private void StunEnemy(Vector2 _stunnerPos) 
@@ -439,11 +434,7 @@ public class EnemyBehaviourController : MonoBehaviour
         }
         animator.SetBool("Dead", false);
         animator.SetBool("Stunned", false);
-
-       
-
     }
-
 
     private void OnDrawGizmosSelected()
     {

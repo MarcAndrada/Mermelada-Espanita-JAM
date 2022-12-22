@@ -47,7 +47,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: 1, g: 0, b: 0.9298849, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   smoothing: 0.1
-  maxPos: {x: 8, y: 8.65}
-  minPos: {x: -9.94, y: -9.36}
+  maxPos: {x: 21, y: 11}
+  minPos: {x: 6.82, y: -3.51}
   expansionRange: 10
   Player: {fileID: 0}
 --- !u!114 &6389342393294225643
@@ -130,7 +130,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ca4fac82e9b5b5247ba7e520c51ce4f2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.066
   m_Pitch: 1
   Loop: 1
   Mute: 0
