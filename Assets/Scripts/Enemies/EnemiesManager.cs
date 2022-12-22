@@ -9,7 +9,6 @@ public class EnemiesManager : MonoBehaviour
 
     public GameObject playerRef;
 
-
     private void Awake()
     {
 

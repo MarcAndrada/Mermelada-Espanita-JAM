@@ -11,9 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 72f9e4b3d998ded4480d8b55167632cb
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Mapas/Mapa1.unity
+    guid: f1fe421bb9f346c4cb637ca535b75374
+  - enabled: 1
+    path: Assets/Scenes/Mapas/Mapa2.unity
+    guid: 09036a6faa682f74fb568eb9ec7d9c78
+  - enabled: 1
+    path: Assets/Scenes/Mapas/Mapa3.unity
+    guid: a8508cc8bc8555d4e9fd4ce4aa8fa957
   - enabled: 1
     path: "Assets/Scenes/DaniMu\xF1ozScene.unity"
     guid: 3dc3c98dd7e3234419d5fb5c7d872bfc

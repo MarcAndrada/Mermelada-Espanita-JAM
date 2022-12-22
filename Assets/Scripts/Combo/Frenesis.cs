@@ -95,7 +95,6 @@ public class Frenesis : MonoBehaviour {
             IncrementFrenesi();
         }
 
-        // Cambiar por kills conseguidas
         if (comboLevel >= 0)
         {
             vignette.intensity.Override(0.15f);
