@@ -20,12 +20,13 @@ public class CreditsController : MonoBehaviour
     private int videoIndex = 0;
 
     private bool canPlay = true;
-
-    private AudioSource audioSource;
+    [SerializeField]
+    private AudioSource audioSource1;
+    [SerializeField]
+    private AudioSource audioSource2;
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
-        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -59,7 +60,8 @@ public class CreditsController : MonoBehaviour
                         break;
                     case 2:
                         creditsCanvas.SetActive(true);
-                        audioSource.Play();
+                        audioSource2.Stop();
+                        audioSource1.Play();
                         break;
                     default:
                         break;
