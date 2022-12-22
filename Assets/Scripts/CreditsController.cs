@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
+
 public class CreditsController : MonoBehaviour
 {
 
@@ -12,17 +14,28 @@ public class CreditsController : MonoBehaviour
     [SerializeField]
     private VideoClip cryClip;
     [SerializeField]
-    private VideoClip creditsClip;
+    private GameObject creditsCanvas;
 
     [SerializeField]
     private int videoIndex = 0;
 
     private bool canPlay = true;
+
+    private AudioSource audioSource;
     private void Awake()
     {
         videoPlayer = GetComponent<VideoPlayer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
+
+    private void Update()
+    {
+        if (videoIndex >= 3 && Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
     void FixedUpdate()
     {
         CheckIfNextVideo();
@@ -45,12 +58,8 @@ public class CreditsController : MonoBehaviour
                         videoPlayer.clip = cryClip;
                         break;
                     case 2:
-                        //videoPlayer.clip = creditsClip;
-                        break;
-                    case 4:
-                        //Ir al menu
-                        Debug.Log("acabo");
-                        Application.Quit();
+                        creditsCanvas.SetActive(true);
+                        audioSource.Play();
                         break;
                     default:
                         break;
