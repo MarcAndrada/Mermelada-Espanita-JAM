@@ -90,6 +90,11 @@ public class Frenesis : MonoBehaviour {
         comboBar.fillAmount = currentTimeCombo / maxTimeCombo;
         image.sprite = combosLevelsTextures[comboLevel];
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            IncrementFrenesi();
+        }
+
         // Cambiar por kills conseguidas
         if (comboLevel >= 0)
         {
@@ -102,7 +107,7 @@ public class Frenesis : MonoBehaviour {
         if (comboLevel >= 2)
         {
             vignette.intensity.Override(0.5f);
-            speedMultiplyer = 2;
+            speedMultiplyer = 1.3f;
         }
 
         if (comboLevel >= 0 && comboLevel < 3)
@@ -138,6 +143,10 @@ public class Frenesis : MonoBehaviour {
         if (comboLevel < 2)
         {
             comboLevel++;
+            currentTimeCombo = maxTimeCombo;
+        }
+        else
+        {
             currentTimeCombo = maxTimeCombo;
         }
     }

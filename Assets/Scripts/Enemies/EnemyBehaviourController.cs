@@ -364,11 +364,7 @@ public class EnemyBehaviourController : MonoBehaviour
     private void HittedByObject(Vector2 _objectPos) 
     {
         //Comprobar si el medidor de combo es menor a X stunearle si no matarle
-<<<<<<< Updated upstream
-        if (true)
-=======
-        if (Frenesis._instance.comboLevel < 3)
->>>>>>> Stashed changes
+        if (Frenesis._instance.comboLevel < 2)
         {
             StunEnemy(_objectPos);
         }
@@ -397,10 +393,7 @@ public class EnemyBehaviourController : MonoBehaviour
         coll.enabled = false;
 
         deathSound.Play();
-<<<<<<< Updated upstream
-=======
         Frenesis._instance.IncrementFrenesi();
->>>>>>> Stashed changes
 
     }
 
@@ -452,11 +445,7 @@ public class EnemyBehaviourController : MonoBehaviour
     }
 
 
-<<<<<<< Updated upstream
-    private void OnDrawGizmos()
-=======
     private void OnDrawGizmosSelected()
->>>>>>> Stashed changes
     {
 
         Gizmos.color = Color.blue;
