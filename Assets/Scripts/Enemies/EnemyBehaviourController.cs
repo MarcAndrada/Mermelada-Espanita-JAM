@@ -390,7 +390,8 @@ public class EnemyBehaviourController : MonoBehaviour
         animator.SetBool("Dead", true);
         animator.SetTrigger("Death");
         //Desactivarle la colision
-        coll.enabled = false;
+        coll.enabled = false;
+
         deathSound.Play();
 
     }
