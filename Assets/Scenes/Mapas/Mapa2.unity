@@ -808,7 +808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c874452a5f5464c898779a14fe357d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHasObject: 0
 --- !u!114 &132683046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12058,7 +12057,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b246c0164237244a93634fa5564d7ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionObject: {fileID: 132683045}
 --- !u!61 &1555769448
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12612,7 +12610,7 @@ PrefabInstance:
     - target: {fileID: 6389342393294225642, guid: 138006d8ee497b54bb4b85d0bf2a0bcc, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: dbdd58a74da9aac4e882fd12d5161284, type: 3}
     - target: {fileID: 6389342393294225644, guid: 138006d8ee497b54bb4b85d0bf2a0bcc, type: 3}
       propertyPath: Player
       value: 
@@ -12647,11 +12645,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6389342393294225645, guid: 138006d8ee497b54bb4b85d0bf2a0bcc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.72
+      value: 7.31
       objectReference: {fileID: 0}
     - target: {fileID: 6389342393294225645, guid: 138006d8ee497b54bb4b85d0bf2a0bcc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.66
+      value: 10.9
       objectReference: {fileID: 0}
     - target: {fileID: 6389342393294225645, guid: 138006d8ee497b54bb4b85d0bf2a0bcc, type: 3}
       propertyPath: m_LocalPosition.z
