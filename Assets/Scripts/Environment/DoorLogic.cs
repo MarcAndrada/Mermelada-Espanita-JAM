@@ -23,7 +23,6 @@ public class DoorLogic : MonoBehaviour
         {
             doorClosed.SetActive(false);
             doorOpened.SetActive(true);
-            m_Collider.isTrigger = false;
             doorSound.Play();
         }
     }
