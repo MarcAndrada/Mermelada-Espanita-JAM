@@ -21,6 +21,7 @@ public class DoorLogic : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
+            this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             doorClosed.SetActive(false);
             doorOpened.SetActive(true);
             doorSound.Play();
