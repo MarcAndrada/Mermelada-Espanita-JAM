@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 374307888}
   - component: {fileID: 374307887}
   - component: {fileID: 374307891}
+  - component: {fileID: 374307892}
   m_Layer: 0
   m_Name: Arroz
   m_TagString: Untagged
@@ -377,6 +378,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3194707, y: 0.2878895}
   m_EdgeRadius: 0
+--- !u!95 &374307892
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374307886}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 70d6df2f7a7288445b115e4c2ecb958d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &403392799
 GameObject:
   m_ObjectHideFlags: 0
@@ -3318,7 +3339,7 @@ PrefabInstance:
     - target: {fileID: 6389342393294225642, guid: 138006d8ee497b54bb4b85d0bf2a0bcc, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: a87f1c3c960230d4997b98389da98637, type: 3}
+      objectReference: {fileID: 8300000, guid: 4b6a487a99873664fa642059dd065e35, type: 3}
     - target: {fileID: 6389342393294225644, guid: 138006d8ee497b54bb4b85d0bf2a0bcc, type: 3}
       propertyPath: Player
       value: 
