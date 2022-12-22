@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         {
             acceleration += accelSpeed * Time.fixedDeltaTime;
             acceleration = Mathf.Clamp(acceleration, 0, 1);
-            rb2d.velocity = inputs * speed * acceleration * Time.fixedDeltaTime;
+            rb2d.velocity = inputs * speed  * Frenesis._instance._speedMulty * acceleration * Time.fixedDeltaTime;
             OnMove(true);
         }
         else

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb2d;
     private PlayerMovement movementController;
+    private PlayerAnimController playerAnim;
     private MousePosition mousePosController;
     private InputSystem inputSystem;
     private TakeObject takeObject;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
         mousePosController = GetComponent<MousePosition>();
         inputSystem = GetComponent<InputSystem>();
         takeObject = GetComponent<TakeObject>();
+        playerAnim = GetComponent<PlayerAnimController>();
 
     }
 
@@ -55,6 +57,9 @@ public class PlayerController : MonoBehaviour
         movementController.enabled = true;
         mousePosController.enabled = true;
         inputSystem.enabled = true;
+        playerAnim.DisableAttackCollider();
+        playerAnim._isAttacking = false;
+
         
 
     }

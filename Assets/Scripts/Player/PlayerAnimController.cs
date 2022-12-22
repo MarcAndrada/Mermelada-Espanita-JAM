@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerAnimController : MonoBehaviour
 {
     // [SerializeField] private float _attackResetTime = 0.12f;
-    [SerializeField] private bool _isAttacking;
+    [SerializeField] public bool _isAttacking;
     private Animator _animator;
     [SerializeField]
     private Collider2D coll2D;

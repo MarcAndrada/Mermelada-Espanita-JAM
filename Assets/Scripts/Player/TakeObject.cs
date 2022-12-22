@@ -43,7 +43,7 @@ public class TakeObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Object"))
+        if (col.CompareTag("Object") && !_hasObject)
         {
             _hasObject = true;
             _plate = col.gameObject;

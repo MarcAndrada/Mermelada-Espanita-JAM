@@ -20,7 +20,8 @@ public class PlateMovement : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void Start()
+
+    private void OnEnable()
     {
         animator.SetTrigger("Throw");
     }
